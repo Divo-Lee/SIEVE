@@ -1,6 +1,6 @@
 # SIEVE
 
-### One-stop differential expression, variability, and skewness analyses using RNA-Seq data
+### SIEVE: One-stop differential expression, variability, and skewness analyses using RNA-Seq data
 
 Hongxiang Li and Tsung Fei Khang
 
