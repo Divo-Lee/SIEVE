@@ -139,10 +139,8 @@ DE_Comparison_simu <- function(data = NULL,
     dat.edgeR <- DGEList(counts=data1, norm.factors=nf, group=group)
     dat.edgeR <- estimateDisp(dat.edgeR, design)
     fit.edgeR <- glmQLFit(dat.edgeR, design)
-    test.edgeR <- glmQLFTest(fit.edgeR)
-
-    lrt <- glmLRT(fit.edgeR, contrast = c(0,1))
-    tp <- topTags(lrt, n = Inf)
+    test.edgeR <- glmQLFTest(fit.edgeR, contrast = c(0,1))                                                                                                                                                       
+    tp <- topTags(test.edgeR, n = Inf)
     top_table <- na.omit(tp$table)
 
     de_table <- top_table[top_table$FDR < 0.05, ]
