@@ -1,0 +1,321 @@
+             GGG   U   U  I  DDDD   EEEE
+            G   G  U   U  I  D   D  E
+            G      U   U  I  D   D  E
+            G  GG  U   U  I  D   D  EEE
+            G   G  U   U  I  D   D  E
+            G   G  U   U  I  D   D  E
+             GGG    UUU   I  DDDD   EEEE
+   
+ GUIDE Classification and Regression Trees and Forests
+ Version 40.3 (Build date: October 8, 2022)        
+ Compiled with GFortran 11.2.0 on Windows 10 Pro
+ Copyright (c) 1997-2022 Wei-Yin Loh. All rights reserved.
+ This software is based upon work supported by the U.S. Army Research Office,
+ the National Science Foundation and the National Institutes of Health.
+  
+ This job was started on 06/08/23 at 14:48
+  
+ Classification tree
+ Pruning by cross-validation
+ Data description file: clrDA.DSC
+ Training sample file: top_devs_table.csv
+ Missing value code: NA
+ Records in data file start on line 2
+ 58 N variables changed to S
+ D variable is label
+ Number of records in data file: 160
+ Length of longest entry in data file: 21
+ Number of classes: 2
+ Training sample class proportions of D variable label:
+   Class  #Cases     Proportion
+ AD           82     0.51250000
+ control      78     0.48750000
+  
+ Summary information for training sample of size 160
+ d=dependent, b=split and fit cat variable using indicator variables,
+ c=split-only categorical, i=fit-only categorical (via indicators),
+ s=split-only numerical, n=split and fit numerical, f=fit-only numerical,
+ m=missing-value flag variable, p=periodic variable, w=weight
+                                                   #Codes/           
+                                                   Levels/           
+  Column  Name             Minimum      Maximum    Periods   #Missing
+       1  CRH         s   -6.991      -0.2221    
+       2  SST         s   -5.146        1.745    
+       3  NPAS4       s   -7.113        1.998    
+       4  LINC01299   s   -5.321        1.067    
+       5  AP003393.1  s   -6.093      -0.4899    
+       6  HBA2        s   -2.972        2.436    
+       7  AL162511.1  s   -6.018       0.2700    
+       8  AC020909.2  s   -4.704      -0.5400E-01
+       9  PNOC        s   -5.839      -0.6080    
+      10  KRT5        s   -6.991      -0.8214    
+      11  C7          s   -3.883        1.610    
+      12  FCGR3B      s   -6.816      -0.9051E-01
+      13  FMOD        s   -4.263        1.616    
+      14  SCARA5      s   -6.260        2.454    
+      15  STEAP4      s   -5.516        1.668    
+      16  SLPI        s   -6.363        2.167    
+      17  CD177       s   -6.854       0.7396    
+      18  SERPINA5    s   -5.387       0.7428    
+      19  S100A12     s   -7.064       0.4655    
+      20  OGN         s   -5.530        3.216    
+      21  FOXG1       s   -6.532        1.888    
+      22  KCNK15      s   -5.184        1.072    
+      23  ARX         s   -6.532       0.6531    
+      24  ZNF699      s   -3.633      -0.8949    
+      25  GP1BB       s   -2.116        3.106    
+      26  HRH1        s   -3.067       0.6988    
+      27  AP002893.1  s   -6.570       0.2461    
+      28  BUD13P1     s   -6.573       -1.195    
+      29  LARS2       s  -0.1766        1.733    
+      30  PELP1       s    1.285        2.655    
+      31  SLC13A4     s   -3.272        2.429    
+      32  PRDM6       s   -3.136       0.4209    
+      33  FAM20A      s   -3.802        1.797    
+      34  DSP         s   -2.283        3.095    
+      35  PHLDB2      s   -2.037        2.933    
+      36  GAS1        s   -1.508        2.151    
+      37  LTBP2       s   -1.302        1.019    
+      38  C2orf40     s   -3.509       0.6224    
+      39  SLC47A1     s   -1.964        2.901    
+      40  ANKS6       s   0.1619        2.556    
+      41  CMTM3       s   -1.292       0.7150    
+      42  DNM2        s    1.485        2.981    
+      43  TRABD       s  -0.9761E-01    2.041    
+      45  AC068888.1  s  -0.4943        2.569    
+      46  HDAC7       s   0.5145        2.007    
+      47  AL133243.2  s   -2.572      -0.3708    
+      48  NCF4        s   -2.866       0.7365E-01
+      49  CATSPERG    s   -2.410       0.5442    
+      50  PCDHA6      s   -5.455      -0.6654    
+      51  EFR3B       s    1.369        2.605    
+      52  ARMT1       s  -0.7009E-01    1.220    
+      53  MTMR7       s  -0.6630        1.448    
+      54  NDFIP1      s    2.456        4.175    
+      55  UGCG        s   0.6136E-01    1.596    
+      56  CALM1       s    4.285        5.618    
+      57  SATB1       s    1.347        2.857    
+      58  MOAP1       s    1.343        3.467    
+      59  TRAPPC6B    s   0.7243        2.314    
+      60  label       d                                  2
+  
+      Total  #cases w/   #missing
+     #cases    miss. D  ord. vals   #X-var   #N-var   #F-var   #S-var
+        160          0          0        1        0        0       58
+     #P-var   #M-var   #B-var   #C-var   #I-var
+          0        0        0        0        0
+ Number of cases used for training: 160
+ Number of split variables: 58
+  
+ Pruning by v-fold cross-validation, with v = 10
+ Selected tree is based on mean of CV estimates
+ Number of SE's for pruned tree: 0.2500
+  
+ Simple node models
+ Equal priors
+ Unit misclassification costs
+ Univariate split highest priority
+ Interaction and linear splits 2nd and 3rd priorities
+ Split values for N and S variables based on exhaustive search
+ Maximum number of split levels: 10
+ Minimum node sample size: 10
+ Top-ranked variables and chi-squared values at root node
+      1  0.5576E+02   FMOD
+      2  0.4588E+02   LTBP2
+      3  0.4547E+02   OGN
+      4  0.3501E+02   C7
+      5  0.3382E+02   CRH
+      6  0.3264E+02   STEAP4
+      7  0.3126E+02   PNOC
+      8  0.2737E+02   SERPINA5
+      9  0.2679E+02   DSP
+     10  0.2641E+02   AP003393.1
+     11  0.2449E+02   SST
+     12  0.2222E+02   AC020909.2
+     13  0.2193E+02   LARS2
+     14  0.2174E+02   S100A12
+     15  0.2156E+02   HRH1
+     16  0.2100E+02   FCGR3B
+     17  0.2045E+02   CD177
+     18  0.1934E+02   AL162511.1
+     19  0.1934E+02   EFR3B
+     20  0.1860E+02   SLPI
+     21  0.1787E+02   HBA2
+     22  0.1732E+02   SLC13A4
+     23  0.1714E+02   GAS1
+     24  0.1659E+02   SLC47A1
+     25  0.1659E+02   ARX
+     26  0.1442E+02   PELP1
+     27  0.1228E+02   BUD13P1
+     28  0.1210E+02   KRT5
+     29  0.1175E+02   ZNF699
+     30  0.1175E+02   LINC01299
+     31  0.1139E+02   DNM2
+     32  0.1104E+02   C2orf40
+     33  0.1104E+02   CATSPERG
+     34  0.1087E+02   AC068888.1
+     35  0.1069E+02   PRDM6
+     36  0.9994E+01   NPAS4
+     37  0.8277E+01   SCARA5
+     38  0.8107E+01   PHLDB2
+     39  0.8107E+01   FAM20A
+     40  0.7434E+01   AP002893.1
+     41  0.6113E+01   CMTM3
+     42  0.5627E+01   HDAC7
+     43  0.5467E+01   GP1BB
+     44  0.4677E+01   TRAPPC6B
+     45  0.4213E+01   KCNK15
+     46  0.4061E+01   ANKS6
+     47  0.3610E+01   MTMR7
+     48  0.3170E+01   PCDHA6
+     49  0.3170E+01   MOAP1
+     50  0.2883E+01   NDFIP1
+     51  0.2603E+01   UGCG
+     52  0.2465E+01   NCF4
+     53  0.2329E+01   SATB1
+     54  0.2063E+01   CALM1
+     55  0.1320E+01   ARMT1
+     56  0.6875E+00   AL133243.2
+     57  0.3544E+00   TRABD
+     58  0.2231E+00   FOXG1
+
+ Size and CV mean cost and SE of subtrees:
+  Tree   #Tnodes  Mean Cost   SE(Mean)   BSE(Mean)  Median Cost  BSE(Median)
+    1        8   2.370E-01   3.360E-02   3.299E-02   2.188E-01   5.245E-02
+    2        7   2.370E-01   3.360E-02   3.299E-02   2.188E-01   5.245E-02
+    3        6   2.370E-01   3.360E-02   3.299E-02   2.188E-01   5.245E-02
+    4**      5   2.183E-01   3.263E-02   3.543E-02   2.188E-01   5.207E-02
+    5        2   2.590E-01   3.436E-02   3.021E-02   2.500E-01   4.400E-02
+    6        1   5.000E-01   4.064E-02   1.696E-17   5.000E-01   1.243E-17
+  
+ 0-SE tree based on mean is marked with * and has 5 terminal nodes
+ 0-SE tree based on median is marked with + and has 5 terminal nodes
+ Selected-SE tree based on mean using naive SE is marked with **
+ Selected-SE tree based on mean using bootstrap SE is marked with --
+ Selected-SE tree based on median and bootstrap SE is marked with ++
+ * tree, ** tree, + tree, and ++ tree all the same
+  
+ Following tree is based on mean CV with naive SE estimate (**)
+  
+ Structure of final tree. Each terminal node is marked with a T.
+  
+ Node cost is node misclassification cost divided by number of training cases
+        Node    Total    Train    Predicted        Node    Split          Interacting
+       label    cases    cases    class            cost    variables      variable
+           1      160      160    AD             5.000E-01 FMOD 
+           2       92       92    control        2.513E-01 CRH 
+           4       54       54    control        4.137E-01 HRH1 
+           8T      18       18    control        3.106E-03 - 
+           9       36       36    AD             3.727E-01 MTMR7 
+          18T      11       11    control        1.745E-01 - 
+          19T      25       25    AD             1.668E-01 MTMR7 
+           5T      38       38    control        2.506E-02 - 
+           3T      68       68    AD             1.534E-01 NPAS4 +HBA2
+  
+ Number of terminal nodes of final tree: 5
+ Total number of nodes of final tree: 9
+ Second best split variable (based on curvature test) at root node is LTBP2
+  
+ Classification tree:
+  
+ Node 1: FMOD <= -1.7190720
+   Node 2: CRH <= -1.8448345
+     Node 4: HRH1 <= -0.16378188
+       Node 8: control
+     Node 4: HRH1 > -0.16378188 or NA
+       Node 9: MTMR7 <= 0.15090211
+         Node 18: control
+       Node 9: MTMR7 > 0.15090211 or NA
+         Node 19: AD
+   Node 2: CRH > -1.8448345 or NA
+     Node 5: control
+ Node 1: FMOD > -1.7190720 or NA
+   Node 3: AD
+ 
+ ***************************************************************
+  
+Node 1: Intermediate node
+ A case goes into Node 2 if FMOD <= -1.7190720
+ FMOD mean = -1.7026872
+   Class      Number   Posterior
+ AD               82  0.5000E+00
+ control          78  0.5000E+00
+ Number of training cases misclassified = 78
+ Predicted class is AD
+ ----------------------------
+Node 2: Intermediate node
+ A case goes into Node 4 if CRH <= -1.8448345
+ CRH mean = -2.4710178
+   Class      Number   Posterior
+ AD               24  0.2513E+00
+ control          68  0.7487E+00
+ Number of training cases misclassified = 24
+ Predicted class is control
+ ----------------------------
+Node 4: Intermediate node
+ A case goes into Node 8 if HRH1 <= -0.16378188
+ HRH1 mean = -0.15121007
+   Class      Number   Posterior
+ AD               23  0.4137E+00
+ control          31  0.5863E+00
+ Number of training cases misclassified = 23
+ Predicted class is control
+ ----------------------------
+Node 8: Terminal node
+   Class      Number   Posterior
+ AD                0  0.3106E-02
+ control          18  0.9969E+00
+ Number of training cases misclassified = 0
+ Predicted class is control
+ ----------------------------
+Node 9: Intermediate node
+ A case goes into Node 18 if MTMR7 <= 0.15090211
+ MTMR7 mean = 0.45244402
+   Class      Number   Posterior
+ AD               23  0.6273E+00
+ control          13  0.3727E+00
+ Number of training cases misclassified = 13
+ Predicted class is AD
+ ----------------------------
+Node 18: Terminal node
+   Class      Number   Posterior
+ AD                2  0.1745E+00
+ control           9  0.8255E+00
+ Number of training cases misclassified = 2
+ Predicted class is control
+ ----------------------------
+Node 19: Terminal node
+   Class      Number   Posterior
+ AD               21  0.8332E+00
+ control           4  0.1668E+00
+ Number of training cases misclassified = 4
+ Predicted class is AD
+ ----------------------------
+Node 5: Terminal node
+   Class      Number   Posterior
+ AD                1  0.2506E-01
+ control          37  0.9749E+00
+ Number of training cases misclassified = 1
+ Predicted class is control
+ ----------------------------
+Node 3: Terminal node
+   Class      Number   Posterior
+ AD               58  0.8466E+00
+ control          10  0.1534E+00
+ Number of training cases misclassified = 10
+ Predicted class is AD
+ ----------------------------
+ 
+ Classification matrix for training sample:
+ Predicted      True class
+ class             AD   control
+ AD                79        14
+ control            3        64
+ Total             82        78
+ 
+ Number of cases used for tree construction: 160
+ Number misclassified: 17
+ Resubstitution estimate of mean misclassification cost: 0.10803627
+ 
+ LaTeX code for tree is in clrDA_new.tex
+ Elapsed time in seconds: 1.2812

@@ -1,0 +1,60 @@
+ \documentclass[12pt]{article}
+ % LaTeX file created by GUIDE version 40.3 on 05/30/23 at 21:58
+ %%%% Usage: latex clrDA_new.tex, dvips clrDA_new.tex, ps2pdf clrDA_new.tex
+ %%%% or: xelatex clrDA_new.tex
+ \usepackage{pstricks}
+ %%%% If using pdflatex, replace above line with \usepackage[pdf]{pstricks}
+ %%%% and use: pdflatex -shell-escape clrDA_new.tex
+ \usepackage{pstricks,pst-node,pst-tree}
+ \usepackage{geometry}
+ \usepackage{lscape}
+ \definecolor{wheat}{rgb}{0.96, 0.87, 0.7}
+ \definecolor{lightgray}{rgb}{0.9, 0.9, 0.9}
+ \definecolor{aqua}{rgb}{0.0, 1.0, 1.0}
+ \definecolor{mauve}{rgb}{0.88, 0.69, 1.0}
+ \definecolor{skyblue}{RGB}{86,180,233}
+ \definecolor{vermillion}{RGB}{213,94,0}
+ \definecolor{purple}{RGB}{204,121,167}
+ \definecolor{bluishgreen}{RGB}{0,158,115}
+ \pagestyle{empty}
+ \begin{document}
+ %\begin{landscape}
+ \begin{center}
+\psset{linecolor=black,tnsep=1pt,tndepth=0cm,tnheight=0cm,treesep=1.5cm,levelsep=61pt,radius=10pt,fillstyle=solid}
+  \pstree[treemode=D]{\Tcircle{ 1 }~[tnpos=l]{\shortstack[r]{\texttt{\detokenize{FMOD}}\\$\leq$\texttt{-1.72}}}
+    ~[tnpos=r]{\shortstack[r]{\texttt{82}\\\texttt{78}}}}{
+  \pstree[treemode=D]{\Tcircle{ 2 }~[tnpos=l]{\shortstack[r]{\texttt{\detokenize{TTC7A}}\\$\leq$\texttt{1.21}}}
+ }{
+  \pstree[treemode=D]{\Tcircle{ 4 }~[tnpos=l]{\shortstack[r]{\texttt{\detokenize{CRH}}\\$\leq$\texttt{-3.09}}}
+ }{
+ \Tcircle[fillcolor=yellow]{ 8 }
+    ~[tnpos=l]{\shortstack[r]{\emph{15}\\\emph{1}}}
+    ~{\shortstack{\makebox[\width][c]{\texttt{\detokenize{AD}}}\\\emph{16}}}
+ \Tcircle[fillcolor=green]{ 9 }
+    ~[tnpos=r]{\shortstack[r]{\emph{9}\\\emph{44}}}
+    ~{\shortstack{\makebox[\width][c]{\texttt{\detokenize{control}}}\\\emph{53}}}
+   }
+ \Tcircle[fillcolor=green]{ 5 }
+    ~[tnpos=r]{\shortstack[r]{\emph{0}\\\emph{23}}}
+    ~{\shortstack{\makebox[\width][c]{\texttt{\detokenize{control}}}\\\emph{23}}}
+   }
+ \Tcircle[fillcolor=yellow]{ 3 }
+    ~[tnpos=r]{\shortstack[r]{\emph{58}\\\emph{10}}}
+    ~{\shortstack{\makebox[\width][c]{\texttt{\detokenize{AD}}}\\\emph{68}}}
+ }
+ \end{center}
+GUIDE v.40.3 0.250-SE
+classification tree for predicting \texttt{\detokenize{label}} using
+equal priors
+and unit misclassification costs.
+ % Tree constructed from 160 observations
+ % and pruned from a tree with 8 terminal nodes.
+ % Maximum number of split levels is 10 and minimum node sample size is 10.
+At each split, an observation goes to the left branch 
+ if and only if the condition is satisfied.
+Predicted classes and sample sizes (in \emph{italics}) printed below terminal nodes;
+class sample sizes for \texttt{\detokenize{label}} =
+ \texttt{\detokenize{AD}} and \texttt{\detokenize{control}} beside nodes.
+ Second best split variable at root node is \texttt{\detokenize{LTBP2}}.
+ %\end{landscape}
+ \end{document}

@@ -1,0 +1,101 @@
+             GGG   U   U  I  DDDD   EEEE
+            G   G  U   U  I  D   D  E
+            G      U   U  I  D   D  E
+            G  GG  U   U  I  D   D  EEE
+            G   G  U   U  I  D   D  E
+            G   G  U   U  I  D   D  E
+             GGG    UUU   I  DDDD   EEEE
+   
+ GUIDE Classification and Regression Trees and Forests
+ Version 40.3 (Build date: October 8, 2022)        
+ Compiled with GFortran 11.2.0 on Windows 10 Pro
+ Copyright (c) 1997-2022 Wei-Yin Loh. All rights reserved.
+ This software is based upon work supported by the U.S. Army Research Office,
+ the National Science Foundation and the National Institutes of Health.
+  
+ This job was started on 05/25/23 at 16:02
+  
+ Random forest of classification trees
+ No pruning
+ Data description file: clrDE.DSC
+ Training sample file: top_devs_table.csv
+ Missing value code: NA
+ Records in data file start on line 2
+ 20 N variables changed to S
+ D variable is label
+ Number of records in data file: 160
+ Length of longest entry in data file: 21
+ Number of classes: 2
+ Training sample class proportions of D variable label:
+   Class  #Cases     Proportion
+ AD           82     0.51250000
+ control      78     0.48750000
+  
+ Summary information for training sample of size 160
+ d=dependent, b=split and fit cat variable using indicator variables,
+ c=split-only categorical, i=fit-only categorical (via indicators),
+ s=split-only numerical, n=split and fit numerical, f=fit-only numerical,
+ m=missing-value flag variable, p=periodic variable, w=weight
+                                                   #Codes/           
+                                                   Levels/           
+  Column  Name             Minimum      Maximum    Periods   #Missing
+       1  CRH         s   -6.991      -0.2221    
+       2  SST         s   -5.146        1.745    
+       3  NPAS4       s   -7.113        1.998    
+       4  LINC01299   s   -5.321        1.067    
+       5  AP003393.1  s   -6.093      -0.4899    
+       6  HBA2        s   -2.972        2.436    
+       7  AL162511.1  s   -6.018       0.2700    
+       8  AC020909.2  s   -4.704      -0.5400E-01
+       9  PNOC        s   -5.839      -0.6080    
+      10  KRT5        s   -6.991      -0.8214    
+      11  C7          s   -3.883        1.610    
+      12  FCGR3B      s   -6.816      -0.9051E-01
+      13  FMOD        s   -4.263        1.616    
+      14  SCARA5      s   -6.260        2.454    
+      15  STEAP4      s   -5.516        1.668    
+      16  SLPI        s   -6.363        2.167    
+      17  CD177       s   -6.854       0.7396    
+      18  SERPINA5    s   -5.387       0.7428    
+      19  S100A12     s   -7.064       0.4655    
+      20  OGN         s   -5.530        3.216    
+      60  label       d                                  2
+  
+      Total  #cases w/   #missing
+     #cases    miss. D  ord. vals   #X-var   #N-var   #F-var   #S-var
+        160          0          0       39        0        0       20
+     #P-var   #M-var   #B-var   #C-var   #I-var
+          0        0        0        0        0
+ Number of cases used for training: 160
+ Number of split variables: 20
+  
+ Number of trees in ensemble: 1000
+ Number of variables used for splitting: 7
+ Simple node models
+ Equal priors
+ Unit misclassification costs
+ Univariate split highest priority
+ No interaction splits
+ Fraction of cases used for splitting each node: .6250
+ Maximum number of split levels: 15
+ Minimum node sample size: 5
+ Mean number of terminal nodes:    10.24    
+ 
+ Classification matrix for training sample:
+ Predicted       True class
+ class             AD   control
+ AD                78         1
+ control            4        77
+ Total             82        78
+ 
+ Number of cases used for tree construction: 160
+ Number misclassified: 5
+ Resubstitution estimate of mean misclassification cost: .0308
+ 
+ Number of OOB cases: 160
+ Number OOB misclassified: 28
+ OOB estimate of mean misclassification cost: .1751
+ Mean number of trees per OOB observation: 367.35
+ 
+ Predicted class probabilities are stored in SIEVE_DE_rf.pred
+ Elapsed time in seconds: 5.2188

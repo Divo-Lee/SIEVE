@@ -1,0 +1,140 @@
+             GGG   U   U  I  DDDD   EEEE
+            G   G  U   U  I  D   D  E
+            G      U   U  I  D   D  E
+            G  GG  U   U  I  D   D  EEE
+            G   G  U   U  I  D   D  E
+            G   G  U   U  I  D   D  E
+             GGG    UUU   I  DDDD   EEEE
+   
+ GUIDE Classification and Regression Trees and Forests
+ Version 40.3 (Build date: October 8, 2022)        
+ Compiled with GFortran 11.2.0 on Windows 10 Pro
+ Copyright (c) 1997-2022 Wei-Yin Loh. All rights reserved.
+ This software is based upon work supported by the U.S. Army Research Office,
+ the National Science Foundation and the National Institutes of Health.
+  
+ This job was started on 05/25/23 at 00:00
+  
+ Random forest of classification trees
+ No pruning
+ Data description file: clrDA.DSC
+ Training sample file: top_devs_table.csv
+ Missing value code: NA
+ Records in data file start on line 2
+ 59 N variables changed to S
+ D variable is label
+ Number of records in data file: 160
+ Length of longest entry in data file: 21
+ Number of classes: 2
+ Training sample class proportions of D variable label:
+   Class  #Cases     Proportion
+ AD           82     0.51250000
+ control      78     0.48750000
+  
+ Summary information for training sample of size 160
+ d=dependent, b=split and fit cat variable using indicator variables,
+ c=split-only categorical, i=fit-only categorical (via indicators),
+ s=split-only numerical, n=split and fit numerical, f=fit-only numerical,
+ m=missing-value flag variable, p=periodic variable, w=weight
+                                                   #Codes/           
+                                                   Levels/           
+  Column  Name             Minimum      Maximum    Periods   #Missing
+       1  CRH         s   -6.991      -0.2221    
+       2  SST         s   -5.146        1.745    
+       3  NPAS4       s   -7.113        1.998    
+       4  LINC01299   s   -5.321        1.067    
+       5  AP003393.1  s   -6.093      -0.4899    
+       6  HBA2        s   -2.972        2.436    
+       7  AL162511.1  s   -6.018       0.2700    
+       8  AC020909.2  s   -4.704      -0.5400E-01
+       9  PNOC        s   -5.839      -0.6080    
+      10  KRT5        s   -6.991      -0.8214    
+      11  C7          s   -3.883        1.610    
+      12  FCGR3B      s   -6.816      -0.9051E-01
+      13  FMOD        s   -4.263        1.616    
+      14  SCARA5      s   -6.260        2.454    
+      15  STEAP4      s   -5.516        1.668    
+      16  SLPI        s   -6.363        2.167    
+      17  CD177       s   -6.854       0.7396    
+      18  SERPINA5    s   -5.387       0.7428    
+      19  S100A12     s   -7.064       0.4655    
+      20  OGN         s   -5.530        3.216    
+      21  FOXG1       s   -6.532        1.888    
+      22  KCNK15      s   -5.184        1.072    
+      23  ARX         s   -6.532       0.6531    
+      24  ZNF699      s   -3.633      -0.8949    
+      25  GP1BB       s   -2.116        3.106    
+      26  HRH1        s   -3.067       0.6988    
+      27  AP002893.1  s   -6.570       0.2461    
+      28  BUD13P1     s   -6.573       -1.195    
+      29  LARS2       s  -0.1766        1.733    
+      30  PELP1       s    1.285        2.655    
+      31  SLC13A4     s   -3.272        2.429    
+      32  PRDM6       s   -3.136       0.4209    
+      33  FAM20A      s   -3.802        1.797    
+      34  DSP         s   -2.283        3.095    
+      35  PHLDB2      s   -2.037        2.933    
+      36  GAS1        s   -1.508        2.151    
+      37  LTBP2       s   -1.302        1.019    
+      38  C2orf40     s   -3.509       0.6224    
+      39  SLC47A1     s   -1.964        2.901    
+      40  ANKS6       s   0.1619        2.556    
+      41  CMTM3       s   -1.292       0.7150    
+      42  DNM2        s    1.485        2.981    
+      43  TRABD       s  -0.9761E-01    2.041    
+      44  TTC7A       s   0.1785E-01    2.007    
+      45  AC068888.1  s  -0.4943        2.569    
+      46  HDAC7       s   0.5145        2.007    
+      47  AL133243.2  s   -2.572      -0.3708    
+      48  NCF4        s   -2.866       0.7365E-01
+      49  CATSPERG    s   -2.410       0.5442    
+      50  PCDHA6      s   -5.455      -0.6654    
+      51  EFR3B       s    1.369        2.605    
+      52  ARMT1       s  -0.7009E-01    1.220    
+      53  MTMR7       s  -0.6630        1.448    
+      54  NDFIP1      s    2.456        4.175    
+      55  UGCG        s   0.6136E-01    1.596    
+      56  CALM1       s    4.285        5.618    
+      57  SATB1       s    1.347        2.857    
+      58  MOAP1       s    1.343        3.467    
+      59  TRAPPC6B    s   0.7243        2.314    
+      60  label       d                                  2
+  
+      Total  #cases w/   #missing
+     #cases    miss. D  ord. vals   #X-var   #N-var   #F-var   #S-var
+        160          0          0        0        0        0       59
+     #P-var   #M-var   #B-var   #C-var   #I-var
+          0        0        0        0        0
+ Number of cases used for training: 160
+ Number of split variables: 59
+  
+ Number of trees in ensemble: 1000
+ Number of variables used for splitting: 20
+ Simple node models
+ Equal priors
+ Unit misclassification costs
+ Univariate split highest priority
+ No interaction splits
+ Fraction of cases used for splitting each node: .6250
+ Maximum number of split levels: 15
+ Minimum node sample size: 5
+ Mean number of terminal nodes:    9.427    
+ 
+ Classification matrix for training sample:
+ Predicted       True class
+ class             AD   control
+ AD                81         1
+ control            1        77
+ Total             82        78
+ 
+ Number of cases used for tree construction: 160
+ Number misclassified: 2
+ Resubstitution estimate of mean misclassification cost: .0125
+ 
+ Number of OOB cases: 160
+ Number OOB misclassified: 27
+ OOB estimate of mean misclassification cost: .1690
+ Mean number of trees per OOB observation: 367.16
+ 
+ Predicted class probabilities are stored in SIEVE_re.pred
+ Elapsed time in seconds: 22.297
