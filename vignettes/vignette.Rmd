@@ -1,0 +1,206 @@
+---
+title: "SIEVE: One-stop differential expression, variability, and skewness using RNA-Seq
+  data"
+author: "Hongxiang Li and Tsung Fei Khang"
+date: '   May 2023'
+output:
+  html_document:
+    df_print: paged
+vignette: "%\\VignetteIndexEntry{vignette} %\\VignetteEngine{knitr::rmarkdown} %\\VignetteEncoding{UTF-8}\n"
+---
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+# Introduction
+
+This guide provides an overview of the R package *SIEVE*, which is a comprehensive tool for analyzing RNA-Seq data. *SIEVE* is a novel statistical method that can simultaneously test differential gene expression in mean, variability and skewness. *SIEVE* uses skew-normal (SN) distribution with centered parameters (CP) under compositional data analysis (CoDA) framework to model the null distribution of centered log-ratio (CLR) transformed RNA-Seq data. The mean parameter, scale parameter and skewness parameter of skew-normal distribution are used to detect differential expression (DE), differential variability (DV) and differential skewness (DS) between two groups. *SIEVE* has a unique capability of simultaneously testing differential skewness, as well as differential expression and  differential variability in RNA-Seq data. Existing methods commonly focus on DE test, and only a limited number of methods are available for DV test. *SIEVE* is the first method to enable differential skewness testing in RNA-Seq data analysis.  *SIEVE* enable us to detect eight classes of genes in two-population comparisons: (i) equal mean, equal variability, equal skewness (ii) equal mean, equal variability, different skewness; (iii) equal mean, different variability, different skewness; (iv) equal mean, different variability, equal skewness; (v) different mean, equal variability, equal skewnss; (vi) different mean, different variability, equal skewnss; (vii) different mean, equal variability, different skewness; (viii) different mean, different variability, different skewness. 
+
+
+# Installation
+
+Install *SIEVE* from GitHub:
+
+```{r setup, message=F, warning=F}
+library(devtools)
+#install_github("Divo-Lee/SIEVE")
+```
+
+
+# Getting Started
+
+Load the *SIEVE* package:
+```{r}
+library(SIEVE)
+```
+
+
+We first provide an illustration using a simulated CLR-transformed RNA-Seq data, `clrCounts3`. This dataset contains 500 genes, with the first 50 genes exhibiting differential expression. Each group has a sample size of 200 (control vs. case). Load `clrCounts3`:
+
+
+```{r}
+data("clrCounts3") 
+#500 genes, 200 samples per group, differential expression for the first 50 genes
+#CLR-transformed counts table
+dim(clrCounts3)
+clrCounts3[1:5, c(1:3, 201:203)]
+clrCounts3[496:500, c(1:3, 201:203)]
+```
+Each row represents a gene, and each column represents a sample.
+
+The function `SN.plot()` produces a histogram of the CLR-transformed count data for a particular gene/transcript, along with the  corresponding fitted skew-normal probability density function. It can be used to graphically check how well the skew-normal distribution fits the  data. The figure below shows that the skew-normal distribution fits the CLR-transformed counts of gene 2 in control group well. 
+
+```{r}
+SN.plot(clrCounts3[2, 1:200]) # gene 2, control group
+```
+
+
+The function `clr.SN.fit()` estimates the mean (*mu*), scale (*sigma*, standard deviation) and skewness (*gamma*) parameters for genes (or a particular gene) using maximum likelihood estimation (MLE) under a single experimental condition.
+
+```{r}
+clr.SN.fit(clrCounts3[2, 1:200]) # gene 2 in control group
+clr.SN.fit(clrCounts3[3:4, 201:400]) # gene 3 and gene 4 in case group
+```
+
+
+
+# Differential Exprssion, Variability and Skewness Analyses
+
+The function `clrSeq()` estimates the mean, scale (standard deviation), and skewness parameters of the skew-normal distribution using CLR-transformed RNA-Seq data for two groups. The output of `clrSeq()` serves as the input of the function `clrSIEVE()`, which performs simultaneous tests for DE, DV, and DS between the two conditions. 
+`clrSIEVE()` returns a list of four class objects: `clrDE_test`, `clrDV_test`, `clrDS_test`, and `clrSIEVE_tests`, which provide  the results of DE, DV and DS tests individually and combined. 
+
+Below are some examples showing how to use the output to perform DE, DV, and DS tests.
+
+## Examples
+We first provide an example of performing the DE test on the simulated data `clrCounts3`. Next, an example of DV test will be provided by using `clrCounts2` dataset, which contains 500 genes, the first 50 genes exhibiting differential variability. Each group has a sample size of 200. 
+
+```{r}
+data("clrCounts3")
+ #CLR-transformed counts table, 500 genes, 200 samples per group, 
+ #differential expression for the first 50 genes
+data("clrCounts2")
+ #CLR-transformed counts table, 500 genes, 200 samples per group, 
+ #differential variability for the first 50 genes,
+dim(clrCounts3); dim(clrCounts2)
+groups <- c(rep(0,200), rep(1,200))
+ # control: 200 samples; case: 200 samples
+clrseq_result1 <-  clrSeq(clrCounts3, group = groups) # MLE, DE dataset
+clrseq_result2 <-  clrSeq(clrCounts2, group = groups) # MLE, DV dataset
+```
+
+
+```{r}
+head(clrseq_result1, 3) # MLE, DE genes
+ #
+tail(clrseq_result1, 3) # MLE, non-DE genes
+ #
+```
+
+```{r}
+head(clrseq_result2, 3) # MLE, DV genes
+ #
+tail(clrseq_result2, 3) # MLE, non-DV genes
+ #
+```
+
+The DE, DV, and DS tests focus on the differences between the two groups in the mean parameter (*mu*), scale parameter (*sigma*, standard deviation), and skewness parameter (*gamma*) of the skew-normal distribution. The tests compare the corresponding parameter values between the two groups to identify statistically significant differences.
+ 
+
+### DE analysis 
+```{r}
+sieve_try1 <- clrSIEVE(clrSeq_result = clrseq_result1,
+                       alpha_level = 0.05,
+                       order_DE = FALSE,
+                       order_LFC = FALSE,
+                       order_DS = FALSE,
+                       order_sieve = FALSE)
+names(sieve_try1)
+```
+
+```{r}
+DE_test_result1 <- sieve_try1$clrDE_test # results of DE tests
+head(DE_test_result1, 3) # DE genes
+tail(DE_test_result1, 3) # non-DE genes
+```
+
+Genes with *adj_pval_DE* < *alpha_level* are flagged as showing statistically significant differential expression. *DE* represents the difference between two groups in mean, that is, *DE* = *mu2* - *mu1*. DE gene: *de_indicator* = 1; non-DE gene: *de_indicator* = 0.
+
+
+### DV analysis
+
+```{r}
+sieve_try2 <- clrSIEVE(clrSeq_result = clrseq_result2,
+                       alpha_level = 0.05,
+                       order_DE = FALSE,
+                       order_LFC = FALSE,
+                       order_DS = FALSE,
+                       order_sieve = FALSE)
+names(sieve_try1)
+
+DV_test_result2 <- sieve_try2$clrDV_test
+head(DV_test_result2, 3)
+tail(DV_test_result2, 3)
+```
+
+Genes with *adj_pval_DV* < *alpha_level* are flagged as showing statistically significant differential variability. *DV* indicates the difference of the standard deviations between two groups, that is, *DV* = *sigma2* - *sigma1*. *LFC* represents the log fold change (LFC) for scale (standard deviation) parameters, that is, *LFC* = $log_2$(*sigma2*/*sigma1*) = $log_2$(*sigma2*) - $log_2$(*sigma1*).  DV gene: *dv_indicator* = 1; non-DV gene: *dv_indicator* = 0.
+
+
+### DS analysis
+
+```{r}
+DS_test_result3 <- sieve_try2$clrDS_test
+head(DS_test_result3, 3)
+```
+Genes with *adj_pval_DS* < *alpha_level* are identified as showing statistically significant differential skewness. *DS* indicates the difference in skewness between two groups, calculated as *DS* = *gamma2* - *gamma1*. DS gene: *ds_indicator* = 1; non-DS gene: *ds_indicator* = 0. Currently, there is no RNA-Seq data simulator available to control the skewness pattern of gene expression. To verify the accuracy of the computational results for the DS test when analyzing read RNA-Seq data, violin plots can be used for visual inspection.
+
+
+### Simultaneous DE, DV and DS analysis
+
+The results of the DE, DV, and DS tests can be simultaneously obtained by a class object `clrSIEVE_tests`, which includes indicators for each of the three tests: `de_indicator`, `dv_indicator` and `ds_indicator`. 
+
+```{r}
+SIEVE_results <- sieve_try1$clrSIEVE_tests
+head(SIEVE_results, 3)
+```
+
+The function `violin.plot.SIEVE()` creates violin plots to compare the distribution of CLR-transformed counts between two groups for DE, DV,  and DS tests. These plots are useful for visually verifying the  computational results are reasonable. The violin plots in the figure below show an example of a gene that has significant DE, non-DV, and non-DS. For gene 1, the control group has significantly smaller mean (`mu1 = -2.818443`) than the case group (`mu2 = -1.54375`), while the  standard deviations (`sigma1 = 1.496367`, `sigma2 = 1.431188`), and the skewness parameters (`gamma1 = -0.7077052`, `gamma2 = -0.8483146`) for both groups are about the same.
+```{r}
+violin.plot.SIEVE(data = clrCounts3, "gene1",
+                  group = groups,
+                  group.names = c("control", "case")) # DE gene (non-DV and non-DS)
+clrseq_result1[1,] # MLE, gene1 of clrCounts3. group 1: control; group 2: case
+```
+
+
+
+## Notes on CLR-transfromation in *SIEVE*
+
+Please note that *SIEVE* does not perform CLR-transformation itself, and therefore CLR-transformed counts must be provided as input. Here is a simple example of CLR-transformed function for an RNA-Seq count table:
+
+```{r, message=F, warning=F}
+library(compositions) # a package for compositional data analysis
+# clr-transformation
+clr.transform <- function(data = NULL){
+  # data: count table, genes in rows and samples in columns
+  data[data == 0] <- 1/2 
+  # A pseudo count 0.5 is added if the count is zero
+  clr.count <- t(clr(t(data)))
+  clr.count <- matrix(as.numeric(clr.count),
+                      nrow = dim(data)[1],
+                      ncol = dim(data)[2])
+  row.names(clr.count) <- row.names(data)
+  return(clr.count)
+}
+```
+
+
+
+
+
+
