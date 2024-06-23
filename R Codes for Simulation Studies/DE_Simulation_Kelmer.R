@@ -165,7 +165,7 @@ DE_Comparison_simu <- function(data = NULL,
     sf <- els/exp(mean(log(libsizes))) # size factors for DESeq2
 
     dat.DESeq2 <- DESeqDataSetFromMatrix(countData = data1, colData = data.frame(group),
-                                         design = ~group)
+                                         design = design)
     sizeFactors(dat.DESeq2) <- sf
     fit.DESeq2 <- DESeq(dat.DESeq2, minReplicatesForReplace=Inf)
     res.DESeq2 <- results(fit.DESeq2, cooksCutoff=F, alpha=0.05)
