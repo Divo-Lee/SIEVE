@@ -202,7 +202,7 @@ els <- nf*libsizes # effective library sizes
 sf <- els/exp(mean(log(libsizes))) # size factors for DESeq2, factors should multiple to 1
 
 dat.DESeq2 <- DESeqDataSetFromMatrix(countData = data1, colData = data.frame(group2),
-                                     design = ~group2)
+                                     design = design)
 sizeFactors(dat.DESeq2) <- sf
 fit.DESeq2 <- DESeq(dat.DESeq2, minReplicatesForReplace=Inf)
 res.DESeq2 <- results(fit.DESeq2, cooksCutoff=F, alpha=0.05)
@@ -281,7 +281,6 @@ length(DE_genes_twee) # 3553 DE genes called by tweeDEseq
 t6 <- proc.time()
 conds <- as.character(group2)
 y <- aldex(data1, conds, mc.samples=128, denom="all",test="t", effect=TRUE,  paired.test=FALSE)
-
 
 criteria.1_ALDEx2 <- quantile(y$diff.btw, 0.025)*(-log10(0.05))
 criteria.2_ALDEx2 <- quantile(y$diff.btw, 0.975)*(-log10(0.05))
