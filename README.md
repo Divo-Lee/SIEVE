@@ -12,4 +12,4 @@ SIEVE: A statistical method for building a unified framework for the simultaneou
  
  
 ### Dependencies:
- `SIEVE` `R` package depends on the following packages: `sn`, `vioplot`, `stats`, `utils`, `grDevices`, `graphics`.
+ `SIEVE` `R` package depends on the following packages: `sn`, `stats`, `utils`, `ggplot2`.
