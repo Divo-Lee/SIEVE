@@ -9,7 +9,7 @@
 #'
 #' @description Produce violin plots of CLR-transformed count data for two or three groups.
 #'
-#' @import ggplot
+#' @import ggplot2
 #'
 #' @examples
 #'   library(SIEVE)
