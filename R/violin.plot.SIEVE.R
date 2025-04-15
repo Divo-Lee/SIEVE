@@ -9,8 +9,7 @@
 #'
 #' @description Produce violin plots of CLR-transformed count data for two or three groups.
 #'
-#'
-#' @importFrom ggplot2 ggplot
+#' @import ggplot
 #'
 #' @examples
 #'   library(SIEVE)
@@ -30,11 +29,11 @@
 #'                 group.names = c("control", "case")) # non-DE
 #' @export
 violin.plot.SIEVE <- function(data = NULL, 
-                               name.gene = NULL,
-                               group = NULL, 
-                               group.names = NULL,
-                               xlab = "CLR-transformed count",
-                               ylab = "Condition"){
+                              name.gene = NULL,
+                              group = NULL, 
+                              group.names = NULL,
+                              xlab = "CLR-transformed count",
+                              ylab = "Condition"){
   # Ensure group is a factor with correct labels
   if (!is.factor(group)) {
     group <- as.factor(group)
