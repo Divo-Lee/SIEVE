@@ -9,7 +9,7 @@
 #'
 #' @description Produce violin plots of CLR-transformed count data for two or three groups.
 #'
-#' @importFrom ggplot2 
+#' @import ggplot2 
 #' @examples
 #'   library(SIEVE)
 #'   data(clrCounts2)  # first 50 genes (gene1 to gene50) are DV genes
