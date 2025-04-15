@@ -5,7 +5,7 @@ Authors@R: c(
     person("Hongxiang", "Li", email = "chelsea.divo@hotmail.com", role = c("aut", "cre")),
     person("Tsung Fei", "Khang", email = "tfkhang@um.edu.my", role = "aut"))
 Description: SIEVE - a unified framework for the simultaneous testing of differential expression, variablity and skewness of genes using RNA-Seq data.  This framework adopts a compositional data analysis approach to modelling RNA-Seq count data, uses the CLR transformation to convert them into continuous variables, and uses the skew-normal distribution to model them.
-Imports: sn, stats, vioplot, grDevices, graphics
+Imports: sn, stats, utils, ggplot2
 License: GPL-2
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
