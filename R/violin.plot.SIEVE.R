@@ -9,8 +9,7 @@
 #'
 #' @description Produce violin plots of CLR-transformed count data for two or three groups.
 #'
-#' @importFrom ggplot2 ggplot
-#' @importFrom ggplot2 aes
+#' @importFrom ggplot2 
 #' @examples
 #'   library(SIEVE)
 #'   data(clrCounts2)  # first 50 genes (gene1 to gene50) are DV genes
@@ -28,30 +27,31 @@
 #'   violin.plot.SIEVE(data = clrCounts3, "gene200", group = group0,
 #'                 group.names = c("control", "case")) # non-DE
 #' @export
-violin.plot.SIEVE <- function(data = NULL, 
-                              name.gene = NULL,
-                              group = NULL, 
-                              group.names = NULL,
-                              xlab = "CLR-transformed count",
-                              ylab = "Condition"){
+violin.plot.SIEVE <- function(data = NULL,
+                               name.gene = NULL,
+                               group = NULL,
+                               group.names = NULL,
+                               xlab = "CLR-transformed count",
+                               ylab = "Condition"){
   # Ensure group is a factor with correct labels
   if (!is.factor(group)) {
     group <- as.factor(group)
   }
-  
+
   # Extract expression values for the specified gene
   gene_values <- as.numeric(data[name.gene, ])
   df <- data.frame(
     Expression = gene_values,
     Group = factor(group, levels = levels(group), labels = group.names)
   )
-  
+
   # Define a custom color palette
   custom_colors <- c("#66c2a5", "#fc8d62", "#8da0cb")[seq_along(levels(df$Group))]
-  
+
   # Create the ggplot
-  p <- ggplot(df, aes(x = Group, y = Expression, fill = Group)) +
-    geom_violin(color = "black", alpha = 0.6) +  # filled violins with black border
+  p <- ggplot(df, aes(x = Group, y = Expression, fill = Group))
+  p +  geom_violin(color = "black",
+                   alpha = 0.6) +  # filled violins with black border
     geom_jitter(width = 0.2, size = 1, color = "black", shape = 1) +  # add points
     coord_flip() +  # horizontal violins
     scale_fill_manual(values = custom_colors) +
@@ -66,6 +66,4 @@ violin.plot.SIEVE <- function(data = NULL,
       axis.text = element_text(size = 10),
       legend.position = "none"  # hide legend since x-axis already labels groups
     )
-  
-  print(p)
 }
