@@ -9,9 +9,7 @@
 #'
 #' @description Produce violin plots of CLR-transformed count data for two or three groups.
 #'
-#' @import vioplot
-#' @import grDevices
-#' @import graphics
+#' @import ggplot2
 #'
 #'
 #' @examples
@@ -31,49 +29,44 @@
 #'   violin.plot.SIEVE(data = clrCounts3, "gene200", group = group0,
 #'                 group.names = c("control", "case")) # non-DE
 #' @export
-violin.plot.SIEVE <- function(data = NULL, name.gene = NULL,
-                          group = NULL, group.names = NULL,
-                          xlab="CLR-transformed count",
-                          ylab="Condition"){
-  # data is the CLR-transformed count table
-  # 2 or 3 groups only
-  if (is.factor(group) == F){group = as.factor(group)}
-
-  if (length(group.names) == 2){
-    clr_count_group1 <- data[name.gene, ][group == levels(group)[1]]
-    clr_count_group2 <- data[name.gene, ][group == levels(group)[2]]
-
-    vioplot(clr_count_group1,
-            clr_count_group2,
-            names=group.names,  pchMed="",
-            col = c(0,0), border ="black", horizontal = T,
-            rectCol=rgb(0,0,0,0), lineCol=rgb(0,0,0,0),
-            xlab=xlab, ylab=ylab)
-
-    stripchart(list(clr_count_group1,
-                    clr_count_group2),
-               method="jitter", vertical=F,  add=TRUE,
-               pch=1, cex=0.5, col="black")
-
-
-  } else if (length(group.names) == 3){
-    clr_count_group1 <- data[name.gene, ][group == levels(group)[1]]
-    clr_count_group2 <- data[name.gene, ][group == levels(group)[2]]
-    clr_count_group3 <- data[name.gene, ][group == levels(group)[3]]
-
-    vioplot(clr_count_group1,
-            clr_count_group2,
-            clr_count_group3,
-            names=group.names,  pchMed="",
-            col = c(0,0), border ="black", horizontal = T,
-            rectCol=rgb(0,0,0,0), lineCol=rgb(0,0,0,0),
-            xlab=xlab, ylab=ylab)
-
-    stripchart(list(clr_count_group1,
-                    clr_count_group2,
-                    clr_count_group3),
-                    method="jitter", vertical=F,  add=TRUE,
-                    pch=1, cex=0.5, col="black")
-
+violin.plot.SIEVE <- function(data = NULL, 
+                               name.gene = NULL,
+                               group = NULL, 
+                               group.names = NULL,
+                               xlab = "CLR-transformed count",
+                               ylab = "Condition"){
+  # Ensure group is a factor with correct labels
+  if (!is.factor(group)) {
+    group <- as.factor(group)
   }
+  
+  # Extract expression values for the specified gene
+  gene_values <- as.numeric(data[name.gene, ])
+  df <- data.frame(
+    Expression = gene_values,
+    Group = factor(group, levels = levels(group), labels = group.names)
+  )
+  
+  # Define a custom color palette
+  custom_colors <- c("#66c2a5", "#fc8d62", "#8da0cb")[seq_along(levels(df$Group))]
+  
+  # Create the ggplot
+  p <- ggplot(df, aes(x = Group, y = Expression, fill = Group)) +
+    geom_violin(color = "black", alpha = 0.6) +  # filled violins with black border
+    geom_jitter(width = 0.2, size = 1, color = "black", shape = 1) +  # add points
+    coord_flip() +  # horizontal violins
+    scale_fill_manual(values = custom_colors) +
+    xlab(ylab) +
+    ylab(xlab) +
+    theme_minimal() +
+    theme(
+      panel.grid = element_blank(),  # remove grid
+      axis.line = element_line(color = "black"),  # show axes
+      axis.ticks = element_line(color = "black"),
+      axis.title = element_text(size = 12),
+      axis.text = element_text(size = 10),
+      legend.position = "none"  # hide legend since x-axis already labels groups
+    )
+  
+  print(p)
 }
