@@ -1,6 +1,6 @@
 Package: SIEVE
 Title: SIEVE: One-stop differential expression, variability, and skewness using RNA-Seq data
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: c(
     person("Hongxiang", "Li", email = "chelsea.divo@hotmail.com", role = c("aut", "cre")),
     person("Tsung Fei", "Khang", email = "tfkhang@um.edu.my", role = "aut"))
