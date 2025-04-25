@@ -24,6 +24,7 @@
 # install.packages("httr")
 # install.packages("jsonlite")
 # install.packages("MASS")
+# install.packages("ggplot2")
 
 library(readr); library(compositions); library(sn)
 library(edgeR); library(DESeq2); library(limma)
@@ -31,7 +32,7 @@ library(tweeDEseq); library(ALDEx2); library(DSS)
 library(vioplot); library(VennDiagram); library(gridExtra)
 library(dplyr); library(httr); library(jsonlite)
 library(SIEVE); library(MDSeq); library(gamlss)
-library(MASS)
+library(MASS)； library(ggplot2)
 
 ### Read data
 # The use of the data files MayoRNAseq_individual_metadata_031422.csv
@@ -737,20 +738,23 @@ DE_100_class_genes <- c("ENSG00000147571", "ENSG00000157005",
 labels <- c("(a)","(b)","(c)","(d)")
 
 for (i in 1:length(DE_100_class_genes)) {
-  violin.plot.SIEVE(data = clr_counts, DE_100_class_genes[i],
+ print(
+ violin.plot.SIEVE(data = clr_counts, 
+                    DE_100_class_genes[i],
                     group = group2,
-                    group.names = c("control", "AD"))
-  title(adj=0, labels[i])
+                    group.names = c("control", "AD")) + 
+    ggtitle(labels[i])
+ )
 }
 
 
 ### DE genes uniquely detected by SIEVE
 DE_unique_genes <- c("ENSG00000176165", # FOXG1
                      "ENSG00000168830", # HTR1E
-                     "ENSG00000112855", # HARS2
+                     "ENSG00000130684", # ZNF337
                      "ENSG00000204371", # EHMT2
-                     "ENSG00000103197", # TSC2
-                     "ENSG00000130684") # ZNF337
+                     "ENSG00000112855", # HARS2
+                     "ENSG00000103197") # TSC2
 
 # uniquely detected
 # ENSG00000176165	FOXG1 # 110 class
@@ -763,10 +767,12 @@ labels <- c("(a)","(b)","(c)","(d)","(e)","(f)")
 
 
 for (i in 1:length(DE_unique_genes)) {
+  print(
   violin.plot.SIEVE(data = clr_counts, DE_unique_genes[i],
                     group = group2,
-                    group.names = c("control", "AD"))
-  title(adj=0, labels[i])
+                    group.names = c("control", "AD"))+ 
+    ggtitle(labels[i])
+  )
 }
 
 
@@ -781,11 +787,13 @@ DV_010_class_genes <- c("ENSG00000172349",
 lables <- c("(a)","(b)","(c)")
 
 for (i in 1:length(DV_010_class_genes)) {
+  print(
   violin.plot.SIEVE(data = clr_counts, 
                     DV_010_class_genes[i],
                     group = group2,
-                    group.names = c("control", "AD"))
-  title(adj=0, labels[i])
+                    group.names = c("control", "AD")) +
+  ggtitle(labels[i])
+  )
 }
 
 
@@ -809,10 +817,12 @@ labels <- c("(a)","(b)","(c)","(d)",
             "(e)","(f)","(g)","(h)")
 
 for (i in 1:length(DS_001_class_gene)) {
+  print(
   violin.plot.SIEVE(data = clr_counts, DS_001_class_gene[i],
                     group = group2,
-                    group.names = c("control", "AD"))
-  title(adj=0, labels[i])
+                    group.names = c("control", "AD")) +
+  ggtitle(labels[i])
+  )
 }
 
 
@@ -839,13 +849,12 @@ simultaneous_genes <- c("ENSG00000162747",
 # ENSG00000133110	POSTN   # 111 class
 labels <- c("(a)","(b)","(c)","(d)","(e)","(f)","(g)","(h)")
 
-
 for (i in 1:length(simultaneous_genes)) {
+  print(
   violin.plot.SIEVE(data = clr_counts, simultaneous_genes[i],
                     group = group2,
-                    group.names = c("control", "AD"))
-  title(adj=0, labels[i])
+                    group.names = c("control", "AD")) +
+  ggtitle(labels[i])
+  )
 }
-
-
 ###END##
