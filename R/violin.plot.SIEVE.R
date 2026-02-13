@@ -41,8 +41,8 @@ violin.plot.SIEVE <- function(data = NULL,
   # Extract expression values for the specified gene
   gene_values <- as.numeric(data[name.gene, ])
   df <- data.frame(
-    Expression = gene_values,
-    Group = factor(group, levels = levels(group), labels = group.names)
+    gene_values,
+    factor(group, levels = levels(group), labels = group.names)
   )
 
   # Define a custom color palette
