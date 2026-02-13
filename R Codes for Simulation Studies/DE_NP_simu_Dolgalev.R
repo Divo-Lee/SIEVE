@@ -1,13 +1,13 @@
-######################################################
+###################################################################
 #SIEVE: One-stop differential expression, variability,
 # and skewness using RNA-Seq data
 #Authors: Hongxiang Li and Tsung Fei Khang
 #Email: chelsea.divo@hotmail.com
 #Last update: 23 Nov. 2025
 #R Codes for comparison of methods
-#Part 4: DE nonPara. simulation study using the Koebbe dataset
-#        (GSE242339)
-######################################################
+#Part 5: DE nonPara. simulation study using the D0l.ga.eve dataset
+#        (GSE229705)
+###################################################################
 
 ## Required R packages
 # install.packages("compositions")
@@ -674,5 +674,6 @@ tab2 <- (FDR.Dolgalev.50samples < 0.05) + (type2.Dolgalev.50samples < 0.2)
 
 apply(tab1, 1, function(k)  (sum(k == 2)/30)*100)
 apply(tab2, 1, function(k)  (sum(k == 2)/30)*100)
+
 
 ###END###
