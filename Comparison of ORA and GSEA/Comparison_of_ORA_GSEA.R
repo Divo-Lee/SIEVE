@@ -135,7 +135,7 @@ if (length(missing_ids) > 0) {
 ###########################################################################
 
 set.seed(100)
-try_DE_DV_DS_2.1.1 <- fgseaSimple(
+GSEA_DE_DV_DS <- fgseaSimple(
   pathways = gene_sets_table,
   stats = max_vec_ranked,
   nperm = 5*10^5,
@@ -148,7 +148,7 @@ try_DE_DV_DS_2.1.1 <- fgseaSimple(
 )
 
 # Format the final data frame for Supplementary Table S14
-final_output <- as.data.frame(try_DE_DV_DS_2.1.1) %>%
+final_output <- as.data.frame(GSEA_DE_DV_DS) %>%
   dplyr::filter(pathway %in% names(go_descriptions)) %>%
   dplyr::mutate(
     pathway = as.character(pathway),
@@ -164,5 +164,6 @@ final_output <- as.data.frame(try_DE_DV_DS_2.1.1) %>%
 
 # Display final table
 print(final_output)
+
 
 ### END ###
