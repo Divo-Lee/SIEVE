@@ -2,7 +2,7 @@
 #SIEVE: One-stop differential expression, variability,
 # and skewness using RNA-Seq data
 #Authors: Hongxiang Li and Tsung Fei Khang
-#Email: chelsea.divo@hotmail.com
+#Email: hxli@ynnu.edu.cn
 #Last update: 13 Feb. 2026
 #R Codes for comparison of ORA and GSEA 
 ################################################################
@@ -167,3 +167,4 @@ print(final_output)
 
 
 ### END ###
+
